@@ -1,0 +1,176 @@
+﻿@model Finance_Tracker.ViewModel.BudgetViewModel
+
+@{
+    Layout = "~/Views/Shared/_TransactionLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">My Budgets for @Model.BudgetforMonth </h2>
+
+    <div class="budget-grid">
+        <!-- Create New Budget Button -->
+        <div class="budget-card add-budget-card" data-bs-toggle="modal" data-bs-target="#addBudgetModal">
+            <div class="card-body text-center">
+                <i class="bi bi-plus-circle fs-1"></i>
+                <p>Create New Budget</p>
+            </div>
+        </div>
+
+        <!-- Budget Cards -->
+        @foreach (var budget in Model.Budgets)
+        {
+            decimal spentAmount = Model.Expenses.ContainsKey(budget.CategoryId) ? Model.Expenses[budget.CategoryId] : 0;
+            decimal remainingAmount = (budget.Budget ?? 0) - spentAmount;
+            int percentageSpent = budget.Budget > 0 ? (int)((spentAmount / budget.Budget) * 100) : 0;
+            bool isOverBudget = spentAmount > (budget.Budget ?? 0);
+            string progressBarClass = isOverBudget ? "bg-danger" : "bg-success";
+
+            <div class="budget-card position-relative">
+                <div class="card-body">
+                    <!-- Top Right Icons -->
+                    <div class="position-absolute top-0 end-0 mt-2 me-2 d-flex gap-2">
+                        <a href="#"
+                           class="text-primary edit-budget-btn"
+                           data-id="@budget.Id"
+                           data-category="@budget.CategoryId"
+                           data-amount="@budget.Budget"
+                           data-bs-toggle="modal"
+                           data-bs-target="#addBudgetModal"
+                           title="Edit">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+
+                        <a asp-action="DeleteBudget"
+                           asp-controller="Transaction"
+                           asp-route-id="@budget.Id"
+                           class="text-danger"
+                           title="Delete"
+                           onclick="return confirm('Are you sure you want to delete this budget?');">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="fs-4">@budget.Category.Icon</span>
+                        <span class="ms-2 fw-bold">@budget.Category.Name</span>
+                    </div>
+
+                    <h5 class="text-primary">रु@budget.Budget</h5>
+                    <p>
+                        @spentAmount Spent |
+                        <span class="@(remainingAmount < 0 ? "text-danger" : "")">
+                            रु@remainingAmount Remaining
+                        </span>
+                    </p>
+
+                    <div class="progress">
+                        <div class="progress-bar @progressBarClass"
+                             role="progressbar"
+                             style="width: @(percentageSpent > 100 ? 100 : percentageSpent)%"
+                             aria-valuenow="@percentageSpent"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                        </div>
+                    </div>
+
+                    @if (isOverBudget)
+                    {
+                        <p class="text-danger fw-bold mt-2">⚠ Budget Exceeded!</p>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Budget Modal (Add/Edit) -->
+<div class="modal fade" id="addBudgetModal" tabindex="-1" aria-labelledby="addBudgetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Budget</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="budgetForm" asp-action="AddBudget">
+                    <input type="hidden" name="Id" id="budgetId" />
+
+                    <div class="mb-3">
+                        <label for="categorySelect" class="form-label">Select Category</label>
+                        <select class="form-select" id="categorySelect" name="CategoryId" required>
+                            <option selected disabled value="">Select a category</option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                bool isBudgeted = Model.Budgets.Any(b => b.CategoryId == category.Id);
+                                <option value="@category.Id" data-budgeted="@isBudgeted.ToString().ToLower()">
+                                    @category.Name
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input type="number" name="Amount" class="form-control" id="budgetAmount"
+                               placeholder="Enter amount" min="0" step="0.01" required />
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Save Budget</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("budgetForm");
+            const modalTitle = document.querySelector("#addBudgetModal .modal-title");
+
+            function resetDropdown(isEditMode, selectedCategoryId = null) {
+                const options = document.querySelectorAll("#categorySelect option");
+
+                options.forEach(option => {
+                    if (!option.value) return; // Skip "Select a category"
+                    const isBudgeted = option.dataset.budgeted === "true";
+
+                    if (isEditMode) {
+                        option.hidden = false;
+                        if (option.value === selectedCategoryId) {
+                            option.selected = true;
+                        }
+                    } else {
+                        option.hidden = isBudgeted;
+                        option.selected = false;
+                    }
+                });
+            }
+
+            document.querySelectorAll(".edit-budget-btn").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const id = this.dataset.id;
+                    const categoryId = this.dataset.category;
+                    const amount = this.dataset.amount;
+
+                    document.getElementById("budgetId").value = id;
+                    document.getElementById("budgetAmount").value = amount;
+                    resetDropdown(true, categoryId);
+
+                    form.setAttribute("action", "/Transaction/EditBudget");
+                    modalTitle.textContent = "Edit Budget";
+                });
+            });
+
+            document.getElementById("addBudgetModal").addEventListener('hidden.bs.modal', function () {
+                form.reset();
+                document.getElementById("budgetId").value = "";
+                resetDropdown(false);
+                form.setAttribute("action", "/Transaction/AddBudget");
+                modalTitle.textContent = "Create New Budget";
+            });
+        });
+    </script>
+}

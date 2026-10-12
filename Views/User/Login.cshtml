@@ -1,0 +1,48 @@
+﻿@using Finance_Tracker.ViewModel;
+@model LoginViewModel;
+
+
+@{
+    Layout = "~/Views/Shared/_Userlayout.cshtml";
+}
+
+
+<div class="main">
+    
+    <div class="login">
+        <form asp-action="Login" asp-controller="User" method="post">
+
+
+            <label>Login</label>
+
+            <input asp-for="Email" placeholder="Email" class="form-control" type="email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <input asp-for="Password" placeholder="Password" class="form-control" type="password" />
+            <span asp-validation-for="Password" class="text-danger"> </span>
+            <div class="sameline">
+                <div class="form-check mb-3">
+                    <label class="form-check-label">
+                        <input asp-for="Rememberme" class="form-check-input" />
+                        @Html.DisplayNameFor(m => m.Rememberme)
+                    </label>
+                </div>
+
+            </div>
+            <button type="submit">Login</button>
+            <a class="forgetpass form-label" asp-action="Forgetpassword">
+                Forgot Password?
+            </a>
+            <hr class="line" />
+            <a class="button-green text-decoration-none" asp-action="Register">
+                Create new account
+            </a>
+            <a asp-action="Index" asp-controller="Home" class="Back">Back</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

@@ -1,0 +1,119 @@
+﻿@model Finance_Tracker.ViewModel.listViewModel;
+@{
+    Layout = "~/Views/Shared/_TransactionLayout.cshtml";
+}
+
+@using Syncfusion.EJ2.Charts
+
+
+<div class="Linechart">
+    <ejs-chart id="line-chart" title="@Model.CategoryName vs Budget">
+        <e-chart-primaryxaxis valueType="Category">
+            <e-majorgridlines width="0"></e-majorgridlines>
+            <e-majorticklines width="0"></e-majorticklines>
+        </e-chart-primaryxaxis>
+        <e-chart-primaryyaxis>
+            <e-majorgridlines width="1" color="#32414d" dashArray="3,5"></e-majorgridlines>
+            <e-majorticklines width="0"></e-majorticklines>
+        </e-chart-primaryyaxis>
+        <e-chart-chartarea>
+            <e-chartarea-border width="0"></e-chartarea-border>
+        </e-chart-chartarea>
+        <e-series-collection>
+            <!-- Cumulative Expense Line -->
+            <e-series datasource="@ViewBag.ExpenseData" xName="Index" yName="Amount" width="4"
+                      name="Cumulative Expense" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line"
+                      fill="#00bdae"></e-series>
+
+            <!-- Budget Line -->
+            <e-series datasource="@ViewBag.BudgetData" xName="Index" yName="Amount" width="4"
+                      name="Budget" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line"
+                      fill="blue" dashArray="5,5"></e-series>
+        </e-series-collection>
+        <e-chart-tooltipsettings enable="true" shared="true"></e-chart-tooltipsettings>
+    </ejs-chart>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Expense Summary</h5>
+            <div>
+                <a href="@Url.Action("ExportToExcel", new { selectedMonth = ViewBag.SelectedMonth,
+               selectedid = ViewBag.selectedid })"
+                   class="btn btn-primary me-2">
+                    <i class="bi bi-file-excel"></i> Export to Excel
+                </a>
+                <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#Report">
+                    <i class="bi bi-pie-chart"></i> Report
+                </button>
+            </div>
+        </div>
+        @foreach (var group in Model.Transactions)
+        {
+            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                <div>
+                    <div class="fw-semibold">@group.Date.ToString("yyyy-MM-dd")</div>
+                    <small class="text-muted">@group.Description</small>
+                </div>
+                <div class="fw-bold text-end">NPR @group.Amount</div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+ @* modal for the report *@
+<div class="modal fade" id="Report" tabindex="-1" aria-labelledby="ReportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ReportModalLabel">Expense Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @* main content *@
+                <div class="Donut">
+                <ejs-accumulationchart id="donut-chart" enableExport="true" background="#fff" enableSmartLabels="true" enableAnimation="true" title="Expense Summary">
+                    <e-accumulation-series-collection>
+                        <e-accumulation-series datasource="@ViewBag.DoughnutChart"
+                                               xName="name"
+                                               yName="amount"
+                                               innerRadius="50%">
+                            <e-accumulationseries-datalabel name="formattedamount" visible="true"></e-accumulationseries-datalabel>
+                        </e-accumulation-series>
+                    </e-accumulation-series-collection>
+                    <e-accumulationchart-legendsettings position="Top">
+                        <e-legendsettings-textstyle color="black" size="1rem"></e-legendsettings-textstyle>
+                    </e-accumulationchart-legendsettings>
+                    <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
+                </ejs-accumulationchart>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="exportDonutChart()">Download</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var modal = document.getElementById('Report');
+        modal.addEventListener('shown.bs.modal', function () {
+            var chart = document.getElementById("donut-chart").ej2_instances[0];
+            if (chart) {
+                chart.refresh(); // Force chart to re-render properly
+            }
+        });
+
+        function exportDonutChart() {
+            var chart = document.getElementById("donut-chart").ej2_instances[0];
+            if (chart) {
+                chart.exportModule.export('PNG', 'ExpenseReport');
+            }
+        }
+    </script>
+}

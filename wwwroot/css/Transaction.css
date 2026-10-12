@@ -1,0 +1,265 @@
+﻿body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    height: 100vh;
+    background: #f3f4f6;
+    overflow-x:hidden;
+}
+
+.sidebar {
+    width: 220px;
+    height: 100vh; /* full height of viewport */
+    position: fixed; /* stick to the left */
+    top: 0;
+    left: 0;
+    background-color: white;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    overflow-y: auto; /* optional: scroll if sidebar overflows */
+    z-index: 1000; /* keep on top */
+}
+
+
+    .sidebar .logo {
+        font-weight: 600;
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .sidebar nav {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 8px;
+    color: #374151;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.nav-item {
+    background-color: transparent;
+    color: #374151;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+}
+
+    .nav-item:hover {
+        background-color: #f0f4f8; /* lighter for hover only */
+        color: #0284c7;
+    }
+
+    .nav-item.active {
+        background-color: #e0f2fe; /* blue background for active */
+        color: #0284c7;
+    }
+
+
+    .nav-item span {
+        margin-left: 12px;
+    }
+
+.sidebar-footer {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.user{
+    font-size:14px;
+    font-weight:700;
+}
+.Upperportion{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    position:relative;
+    top:25px;
+    left:20px;
+    align-items:center;
+}
+
+/*.Upperportion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+*/
+.upper-text h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.Button .btn {
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+}
+
+.transaction-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-box {
+    width: 250px;
+}
+
+.category-filter {
+    width: 180px;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* Budget Grid Layout */
+.budget-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive */
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+
+/* Force 3 columns on medium+ screens */
+@media (min-width: 768px) {
+    .budget-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Budget Card */
+.budget-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    transition: transform 0.3s;
+    height: 100%;
+}
+
+    /* Hover Effect */
+    .budget-card:hover {
+        transform: scale(1.03);
+    }
+
+/* Add New Budget Card */
+.add-budget-card {
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+/* Icon Sizing */
+.budget-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100vh;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.dashboard-row {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    align-items: center;
+    margin: 0; /* Remove top margin */
+    flex-shrink: 0;
+}
+
+.Dashboardcard {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    width: 350px;
+    text-align: center;
+    height:150px;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+    .icon.purple {
+        background-color: #7f56d9;
+    }
+
+    .icon.orange {
+        background-color: #ff6f00;
+    }
+
+    .icon.red {
+        background-color: #e53935;
+    }
+
+.Amount {
+    color: #1e1e2f;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.label {
+    color: rgba(112, 108, 108, 0.831);
+    font-size: 0.9rem;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.charts {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+    justify-content: center;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.Donut, .Splinechart {
+    background: transparent;
+    border-radius: 12px;
+    padding: 1rem;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    margin: 0;
+    flex: 1;
+    height: 100%; /* Fill remaining space */
+}
+
+#donut-chart {
+    height: 100%;
+    width:100%;
+}
+

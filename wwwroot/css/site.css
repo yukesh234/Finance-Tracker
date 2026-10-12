@@ -1,0 +1,143 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #12161d;
+    color: #fff;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+.Header {
+    font-size: 46px;
+    color:white;
+    text-align:center;
+    font-weight:900;
+    margin-top:30px;
+}
+
+.mid-content {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    padding: 10px;
+    margin: 20px;
+    color: #ffffff85;
+}
+
+.image-wrapper {
+    perspective: 1000px; /* Adds 3D depth */
+    overflow: hidden;
+    height: 620px; 
+}
+
+.demo-image {
+    transform:  rotateX(15deg); /* Initial tilt */
+    transition: transform 0.5s ease-in;
+    will-change: transform;
+}
+
+    .demo-image.un-tilted {
+        transform: rotateY(0deg) rotateX(0deg);
+    }
+
+.Features {
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff;
+    margin-top:2px;
+    margin-bottom: 15px;
+}
+
+.Cards-Container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.Card {
+    width: 250px;
+    background-color: #1e1e2d;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin-bottom: 20px;
+    color: #f0f0f0;
+    opacity: 0; /* Initially hidden */
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+    .Card:nth-child(1) {
+        animation-delay: 0.3s;
+    }
+
+    .Card:nth-child(2) {
+        animation-delay: 0.9s;
+    }
+
+    .Card:nth-child(3) {
+        animation-delay: 1.5s;
+    }
+
+    .Card:nth-child(4) {
+        animation-delay: 1.8s;
+    }
+
+    .Card:nth-child(5) {
+        animation-delay: 2.5s;
+    }
+
+.top{
+    margin-bottom:20px;
+}
+.procedures {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ready > p{
+    font-size:20px;
+    font-weight:700;
+    text-align:center;
+    margin-top:40px;
+    margin-bottom:20px;
+}
+

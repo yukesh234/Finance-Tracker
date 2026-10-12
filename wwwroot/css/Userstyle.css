@@ -1,0 +1,219 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Jost', sans-serif;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+}
+
+.main {
+    width: 350px;
+    min-height: 500px;
+    background: rgba(0, 0, 0, 0.5); /* Transparent background */
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #000;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login,
+.signup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .login form,
+    .signup form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+label {
+    color: #fff;
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background: #e0dede;
+}
+
+button {
+    width: 80%;
+    padding: 10px;
+    margin-top: 20px;
+    background: #573b8a;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    button:hover {
+        background: #6d44b8;
+    }
+
+.form-check {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.form-check-label {
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: 1em;
+    color: #fff;
+}
+
+.sameline {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 16px;
+    padding-top: 8px;
+}
+
+.forgetpass {
+    color: #ddd;
+    font-size: 0.9em;
+    padding-top: 25px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+    .forgetpass:hover {
+        color: #fff;
+        text-decoration-line: underline;
+        text-decoration-color: White;
+    }
+
+.button-green {
+    text-align: center;
+    width: 80%;
+    margin-top: 10px;
+    background: #36A420;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    transition: background 0.3s;
+}
+
+    .button-green:hover {
+        background: #36a420d0;
+    }
+
+.account {
+    font-size: 16px;
+    padding: 15px;
+    text-decoration: none;
+}
+
+    .account:hover {
+        text-decoration-line: underline;
+        text-decoration-color: White;
+    }
+
+.box {
+    width: 350px;
+    min-height: 400px;
+    background: rgba(0, 0, 0, 0.5); /* Transparent background */
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #000;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Text {
+    Color: White;
+    font-weight: bold;
+    text-align: center;
+}
+
+.Subtext {
+    Color: rgba(255, 255, 255, 0.751);
+}
+
+.maintaingap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.Submit {
+    background: linear-gradient(135deg, #6c63ff, #b56dff);
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+    .Submit:hover {
+        background: linear-gradient(135deg, #b56dff, #6c63ff);
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+    }
+
+.Back {
+    color: #ddd;
+    position:relative;
+    right:100px;
+    font-size: 0.9em;
+    padding-top: 25px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+    .Back:hover {
+        color: #fff;
+        text-decoration-line: underline;
+        text-decoration-color: White;
+    }
+.Verifybox {
+    width: 350px;
+    min-height: 300px;
+    background: rgba(0, 0, 0, 0.5); /* Transparent background */
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #000;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.down{
+    position:relative;
+    top:20px;
+}

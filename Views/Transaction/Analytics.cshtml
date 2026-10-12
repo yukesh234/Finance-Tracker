@@ -1,0 +1,88 @@
+﻿@model List<Finance_Tracker.ViewModel.AnalyticsViewModel>
+
+@{
+    Layout = "~/Views/Shared/_TransactionLayout.cshtml";
+}
+
+
+
+<div class="d-flex justify-content-evenly gap-xxl-5">
+<h2 class="mb-4 text-center">Expense Analytics</h2>
+    <a class="btn btn-primary h-100" data-bs-toggle="modal" data-bs-target="#addcategory">Add Category</a> 
+</div>
+<form asp-action="Analytics" method="get">
+    <select name="selectedMonth" class="form-control" onchange="this.form.submit()">
+        <option value="">Overall</option>
+        @foreach (var month in ViewBag.Months as List<string>)
+        {
+            <option value="@month" selected="@(month == ViewBag.SelectedMonth ? "selected" : null)">
+                @month
+            </option>
+        }
+    </select>
+</form>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card shadow-sm border-0 h-100 text-center">
+                <div class="card-body">
+                    <div class="mb-2" style="font-size: 2rem;">
+                        @Html.Raw(item.Icon)
+                    </div>
+                    <h5 class="card-title">@item.CategoryName</h5>
+                    <p class="card-text">
+                        Transactions: <strong>@item.Transactions</strong>
+                    </p>
+                    <a href="@Url.Action("CategoryDetails", "Transaction", new { categoryId = item.CategoryId, selectedMonth = ViewBag.SelectedMonth })"
+                       class="btn btn-outline-primary">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@* modal popup *@
+
+<div class="modal fade" id="addcategory" tabindex="-1" aria-labelledby="addTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addcategorymodel">Add Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="transactionForm" asp-action="Addcategory" method="post">
+                    <input type="hidden" id="TransactionId" name="Id" />
+
+                    <div class="mb-3">
+                        <label for="NewCategoryName" class="form-label">Category Name</label>
+                        <input name="NewCategoryName" class="form-control" type="text" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="NewIcon" class="form-label">Icon</label>
+                        <input name="NewIcon" class="form-control" type="text" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="newCategoryType" class="form-label">Category Type</label>
+                        <select name="newCategoryType" class="form-control">
+                            <option value="1">Expense</option>
+                            <option value="0">Income</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Category</button>
+                    </div>
+                </form>
+            </div>
+</div>
+</div>
+</div>
+

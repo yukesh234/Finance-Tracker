@@ -1,0 +1,114 @@
+﻿@{
+    Layout = "~/Views/Shared/_TransactionLayout.cshtml";
+}
+
+<form asp-action="Dashboard" method="get">
+    <select name="selectedMonth" class="form-control" onchange="this.form.submit()">
+        <option value="">Overall</option>
+        @foreach (var month in ViewBag.Months as List<string>)
+        {
+            <option value="@month" selected="@(month == ViewBag.SelectedMonth ? "selected" : null)">
+                @month
+            </option>
+        }
+    </select>
+</form>
+<div class="body">
+    <div class="head">
+        <div class="main-content">
+            <div class="dashboard-row">
+
+                <!-- Balance Card -->
+                <div class="Dashboardcard balance-card">
+                    <div>
+                        <div class="icon purple"><i class="fas fa-wallet"></i></div>
+                        <div class="label text-center">Total Balance</div>
+                        <div class="Amount">@ViewBag.balance</div>
+                    </div>
+                </div>
+
+                <!-- Income Card -->
+                <div class="Dashboardcard income-card">
+                    <div>
+                        <div class="icon orange"><i class="fas fa-wallet"></i></div>
+                        <div class="label text-center">Total Income</div>
+                        <div class="Amount">@ViewBag.income</div>
+                    </div>
+                </div>
+
+                <!-- Expense Card -->
+                <div class="Dashboardcard expense-card">
+                    <div>
+                        <div class="icon red"><i class="fas fa-scissors"></i></div>
+                        <div class="label text-center">Total Expenses</div>
+
+                        <div class="Amount">@ViewBag.expense</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @* Charts Section *@
+    @using Syncfusion.EJ2.Charts
+
+    <div class="charts">
+        <!-- Donut Chart -->
+        <div class="Donut">
+            @if (ViewBag.DoughnutChart == null || ((IEnumerable<object>)ViewBag.DoughnutChart).Cast<dynamic>().Count() == 0)
+            {
+                <p class="text-center fs-4">You don’t have any expense</p>
+            }
+            else
+            {
+                <ejs-accumulationchart id="donut-chart" background="#fff" enableSmartLabels="true" enableAnimation="true" title="Expense by category">
+                    <e-accumulation-series-collection>
+                        <e-accumulation-series datasource="@ViewBag.DoughnutChart"
+                                               xName="Categorywithicon"
+                                               yName="amount"
+                                               innerRadius="50%">
+                            <e-accumulationseries-datalabel name="formattedamount" visible="true"></e-accumulationseries-datalabel>
+                        </e-accumulation-series>
+                    </e-accumulation-series-collection>
+                    <e-accumulationchart-legendsettings position="Top">
+                        <e-legendsettings-textstyle color="black" size="1rem"></e-legendsettings-textstyle>
+                    </e-accumulationchart-legendsettings>
+                    <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
+                </ejs-accumulationchart>
+            }
+        </div>
+
+        <!-- Spline Chart -->
+        <div class="Splinechart">
+            @if (ViewBag.SplineChartData == null || ((IEnumerable<object>)ViewBag.SplineChartData).Cast<dynamic>().Count() == 0)
+            {
+                <p>No income or expense data available for graph.</p>
+            }
+            else
+            {
+                <ejs-chart id="spline-chart" title="Income vs expense">
+                    <e-chart-primaryxaxis valueType="Category">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis>
+                        <e-majorgridlines width="1" color="#32414d" dashArray="3,5"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                    </e-chart-primaryyaxis>
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-series-collection>
+                        <e-series datasource="@ViewBag.SplineChartData" xName="day" width="4"
+                                  yName="income"
+                                  name="Income" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                        <e-series datasource="@ViewBag.SplineChartData" xName="day" width="4"
+                                  yName="expense"
+                                  name="Expense" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                    </e-series-collection>
+                    <e-chart-tooltipsettings enable="true" shared="true"></e-chart-tooltipsettings>
+                </ejs-chart>
+            }
+        </div>
+    </div>

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FT</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/29.1.33/material.css" />
+    <link rel="stylesheet" href="~/css/Transaction.css" asp-append-version="true" />
+    <script src="https://cdn.syncfusion.com/ej2/29.1.33/dist/ej2.min.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">Dashboard
+            <br />
+            <span class="user">Hello @User.Identity.Name
+                <br /> @User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value
+            </span>
+        </div>
+        <nav>
+            <a asp-controller="Transaction" asp-action="Dashboard"
+               class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Dashboard" ? "active" : "")">
+                <img src="https://img.icons8.com/ios-filled/20/000000/speed.png" /> <span>Dashboard</span>
+            </a> 
+
+            <a asp-controller="Transaction" asp-action="Budget"
+               class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Budget" ? "active" : "")">
+                <img src="https://img.icons8.com/ios-filled/20/000000/wallet-app.png" /> <span>Budget</span>
+            </a>
+
+            <a asp-controller="Transaction" asp-action="Transaction"
+               class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Transaction" ? "active" : "")">
+                <img src="https://img.icons8.com/ios-filled/20/000000/money-transfer.png" /> <span>Transactions</span>
+            </a>
+
+            <a asp-controller="Transaction" asp-action="Analytics"
+               class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Analytics" ? "active" : "")">
+                <img src="https://img.icons8.com/ios-filled/20/000000/combo-chart.png" /> <span>Analytics</span>
+            </a>
+            <a asp-controller="Transaction" asp-action="Reports"
+               class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Reports" ? "active" : "")">
+                <img src="https://img.icons8.com/ios-filled/20/000000/business-report.png" /> <span>Reports</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a asp-controller="User" asp-action="Logout"
+               class="nav-item">
+                <img src="https://img.icons8.com/ios-filled/20/000000/logout-rounded-left.png" /> <span>Log Out</span>
+            </a>
+            </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main style="margin-left: 220px; padding: 1.5rem; width: calc(100% - 220px);">
+        @RenderBody()
+    </main>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <ejs-scripts></ejs-scripts>
+</body>
+</html>

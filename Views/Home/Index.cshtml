@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+    <div class="Header">
+        Track your <br />
+        Finances 
+    </div>
+    <div class="mid-content">
+        Take control of your finances and monitor your expenses,
+        manage your budget <br />
+        and analyze your spending
+        <div class="Buttons">
+        <a asp-action="Register" asp-controller="User" class="btn btn-primary m-2"> Get started </a>
+        </div>
+    </div>
+<div class="image-wrapper">
+    <div class="demo-image" id="demoImage">
+        <img src="~/images/ProjectDemo.png" alt="demo" width="1280" height="620" />
+    </div>
+</div>
+
+<div class="Features">Features of the system</div>
+
+<div class="Cards-Container">
+    <div class="Card">
+        <div class="Icon"><i class="bi bi-bar-chart-fill"></i></div>
+        <div class="Title">Analytics</div>
+        <div class="Description">Get detailed insights on your spending patterns</div>
+    </div>
+
+    <div class="Card">
+        <div class="Icon"><i class="bi bi-wallet-fill"></i></div>
+        <div class="Title">Budgeting</div>
+        <div class="Description">Track your budget effectively and stay on top of your finances</div>
+    </div>
+
+    <div class="Card">
+        <div class="Icon"><i class="bi bi-file-earmark-bar-graph-fill"></i></div>
+        <div class="Title">Reports</div>
+        <div class="Description">Generate reports for better financial analysis</div>
+    </div>
+
+    <div class="Card">
+        <div class="Icon"><i class="bi bi-person-lines-fill"></i></div>
+        <div class="Title">Multi Account</div>
+        <div class="Description">Manage multiple accounts</div>
+    </div>
+
+    <div class="Card">
+        <div class="Icon"><i class="bi bi-shield-lock-fill"></i></div>
+        <div class="Title">Security</div>
+        <div class="Description">Your financial data is securely stored and protected</div>
+    </div>
+</div>
+
+
+<div class="Header top"> How it Works</div>
+
+<div class="procedures">
+    <div class="Process">
+        <div class="Icon text-center p-3"><i class="bi bi-person-plus"></i></div>
+        <div class="Title">1. Create your account</div>
+        <div class="Description">Get started with our simple and easy signup process</div>
+    </div>
+
+    <div class="Process">
+        <div class="Icon text-center p-3"><i class="bi bi-file-earmark-bar-graph-fill"></i></div>
+        <div class="Title">2. Track your spending </div>
+        <div class="Description">Categorize and Track your transaction</div>
+    </div>
+
+    <div class="Process">
+        <div class="Icon text-center p-3"> <i class="bi bi-pie-chart"></i></div>
+        <div class="Title">3. Get the insights</div>
+        <div class="Description">Get started with our simple and easy signup process</div>
+    </div>
+</div>
+
+<div class="ready">
+    <p class="Header">Ready to track your finances?</p>
+    <a asp-action="Register" asp-controller="User" class="btn btn-primary d-flex justify-content-center"> Get started</a>
+    </div>
+
+<script>
+        window.addEventListener("scroll", function () {
+        const element = document.getElementById("demoImage");
+        if (window.scrollY > 100) {
+            element.classList.add("un-tilted");
+        } else {
+            element.classList.remove("un-tilted");
+        }
+    });
+
+</script>

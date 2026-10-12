@@ -1,0 +1,57 @@
+﻿@using Finance_Tracker.ViewModel;
+@model VerifyCodeViewModel;
+
+@{
+    Layout = "~/Views/Shared/_Userlayout.cshtml";
+}
+
+<div class="box">
+    <div>
+        <form asp-action="VerifyCodeSubmit" method="post">
+            <div class="maintaingap">
+                <div>
+                    <span style="font-size:20px;" class="Text">Confirmation <br />  </span>
+                </div>
+                <div>
+                    <span style="font-size: 16px;" class="Subtext">Please enter the code <br />  </span>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="d-flex justify-content-center gap-3">
+                <input type="text" asp-for="Digit1" class="form-control text-center code-input" maxlength="1" required style="width: 60px; height: 60px; font-size: 24px; border: 2px solid #333;" />
+                <input asp-for="Digit2" type="text" class="form-control text-center code-input" maxlength="1" required style="width: 60px; height: 60px; font-size: 24px; border: 2px solid #333;" />
+                <input asp-for="Digit3" type="text" class="form-control text-center code-input" maxlength="1" required style="width: 60px; height: 60px; font-size: 24px; border: 2px solid #333;" />
+                <input asp-for="Digit4" type="text" class="form-control text-center code-input" maxlength="1" required style="width: 60px; height: 60px; font-size: 24px; border: 2px solid #333;" />
+            </div>
+
+            <br />
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn Submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    const inputs = document.querySelectorAll('.code-input');
+
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', () => {
+            if (input.value.length === 1) {
+                if (index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && input.value.length === 0) {
+                if (index > 0) {
+                    inputs[index - 1].focus();
+                }
+            }
+        });
+    });
+</script>

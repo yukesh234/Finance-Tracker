@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Views/Shared/_TransactionLayout.cshtml";
+}
+<div class="p-xxl-4">
+    <button type="button" class="btn btn-light position-fixed top-0 end-0 m-3 " onclick="Report()">
+        <img src="https://img.icons8.com/?size=100&id=iKHgFBf3bRsI&format=png&color=000000" alt="Download icon" class="me-2" style="width:30px; height:30px;" />
+</button>
+
+</div>
+
+<ejs-chart id="Report" title="Monthly budget vs Expense" enableAnimation enableExport >
+    <e-chart-primaryxaxis valueType="Category" title="Month">
+        <e-majorgridlines width="0"></e-majorgridlines>
+        <e-majorticklines width="0"></e-majorticklines>
+    </e-chart-primaryxaxis>
+    <e-chart-primaryyaxis title="Amount"></e-chart-primaryyaxis>
+    <e-series-collection>
+        <e-series name="Budget" xName="xValue" yName="Budget" fill="#4FC3F7" dataSource="ViewBag.ReportData"
+                  type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+        </e-series>
+        <e-series name="Expenses" xName="xValue" yName="Expense" fill="#EF5350" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" dataSource="ViewBag.ReportData"></e-series>
+        <e-series name="Income" xName="xValue" yName="Income" fill="#66BB6A" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" dataSource="ViewBag.ReportData"></e-series>
+       
+    </e-series-collection>
+    <e-chart-tooltipsettings enable="true" shared></e-chart-tooltipsettings>
+</ejs-chart>
+
+
+
+<script>
+    function Report() {
+           var chart = document.getElementById("Report").ej2_instances[0];
+           if (chart) {
+               chart.exportModule.export('PNG', 'ExpenseReport');
+           }
+       }
+</script>
